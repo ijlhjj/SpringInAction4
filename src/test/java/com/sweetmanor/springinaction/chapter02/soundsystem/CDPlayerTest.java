@@ -1,5 +1,7 @@
 package com.sweetmanor.springinaction.chapter02.soundsystem;
 
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOutNormalized;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
@@ -21,11 +23,22 @@ import com.sweetmanor.springinaction.chapter02.soundsystem.config.CDPlayerConfig
 class CDPlayerTest {
 
 	@Autowired
+	private MediaPlayer player;
+
+	@Autowired
 	private CompactDisc cd;
 
 	@Test
 	public void cdShouldNotBeNull() {
 		assertNotNull(cd);
+	}
+
+	@Test
+	public void play() throws Exception {
+		String text = tapSystemOutNormalized(() -> {
+			player.play();
+		});
+		assertEquals("Playing Sgt. Pepper's Lonely Hearts Club Band by The Beatles\n", text);
 	}
 
 }
